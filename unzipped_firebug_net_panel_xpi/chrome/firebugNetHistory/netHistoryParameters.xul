@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+ * ***** BEGIN LICENSE BLOCK *****
+ * 
+ * The contents of this file are subject to the Mozilla Public License
+ * Version 1.1 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ * 
+ * Software distributed under the License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific language governing rights and limitations
+ * under the License.
+ * 
+ * The Original Code is Firebug Net Panel History Overlay.
+ * 
+ * The Initial Developer of the Original Code is Mihailo Lalevic.
+ * Portions created by Initial Developer are Copyright (C) 2008 the
+ * Initial Developer. All Rights Reserved.
+ * 
+ * Contributor(s): 
+ * 
+ * ***** END LICENSE BLOCK ***** *
+-->
+
+<!--
+	Dialog that is setting up history depth parameter
+	
+	On load reads history depth preference passed in input parameter
+	On button accept click returns value from the text box to the caller
+	  in the output parameter
+	
+	Called from options menu on net panel 
+-->
+<dialog id="loginDialog" 
+		xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
+		buttons="accept,cancel"
+		buttonlabelaccept="Ok"
+		buttonlabelcancel="Cancel"
+		ondialogaccept="onAccept();"
+		ondialogcancel=""
+		onload="onLoad();"
+		style="background-color: white;"
+		title="Set history depth"
+		>
+	<script src="chrome://firebugnethistory/content/netHistoryParameters.js" type="application/x-javascript"/>
+	<vbox>
+		<label value="History depth:" />
+		<!--textbox id="historyDepthValue" maxlength="4" size="10" 
+				 type="number" hidespinbuttons="true" /-->
+	    <textbox id="historyDepthValue" maxlength="4" size="10" style="text-align: right;" />
+	</vbox>
+</dialog>

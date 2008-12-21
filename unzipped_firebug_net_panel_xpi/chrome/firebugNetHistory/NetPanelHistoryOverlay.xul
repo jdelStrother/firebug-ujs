@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+ * ***** BEGIN LICENSE BLOCK *****
+ * 
+ * The contents of this file are subject to the Mozilla Public License
+ * Version 1.1 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ * 
+ * Software distributed under the License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific language governing rights and limitations
+ * under the License.
+ * 
+ * The Original Code is Firebug Net Panel History Overlay.
+ * 
+ * The Initial Developer of the Original Code is Mihailo Lalevic.
+ * Portions created by Initial Developer are Copyright (C) 2008 the
+ * Initial Developer. All Rights Reserved.
+ * 
+ * Contributor(s): 
+ * 
+ * ***** END LICENSE BLOCK ***** * 
+-->
+
+<!--
+	Overlay that is adding buttons and labels to firebug net panel
+	Overlay anchor point is fbNetButtons which holds buttons for the
+	  net panel buttons on the button palette
+	  
+	Buttons added are invoking net panel history overlay's prevHistory
+	  and nextHistory functions
+-->
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"> 
+
+    <script src="chrome://firebugnethistory/content/NetPanelHistoryOverlay.js" type="application/x-javascript"/> 
+            
+    <commandset id="mainCommandSet"> 
+        <command id="cmd_historyPrev" oncommand="Firebug.NetPanelHistoryOverlayModel.prevHistory(FirebugContext)"/>
+        <command id="cmd_historyNext" oncommand="Firebug.NetPanelHistoryOverlayModel.nextHistory(FirebugContext)"/>
+    </commandset> 
+    
+    <toolbar id="fbToolbar" align="center"> 
+        <hbox id="fbToolbarInner" insertbefore="fbDetachButton" flex="1" align="center"> 
+        
+            <hbox id="fbNetButtons">
+                <toolbarseparator/>
+                <vbox>
+                	<label id="fbNetFilter-historyLabel" value="History: 0/0" />
+                	<hbox>
+		                <toolbarbutton id="historyPrev"
+		                    label="&lt;" class="toolbar-text-button"
+		                    tooltiptext="Get previous history entry" command="cmd_historyPrev"/>
+		                <toolbarbutton id="historyNext"
+		                    label="&gt;" class="toolbar-text-button"
+		                    tooltiptext="Get next history entry" command="cmd_historyNext"/>
+	                </hbox>
+                </vbox>
+            </hbox> 
+        </hbox> 
+    </toolbar> 
+
+</overlay>
