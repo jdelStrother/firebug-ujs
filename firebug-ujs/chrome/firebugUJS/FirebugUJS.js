@@ -36,13 +36,17 @@ FBL.ns( function() { with (FBL) {
 
 	show: function(state) {
 		FirebugContext.getPanel("FirebugUJS").printLine('called show');
+		// FirebugContext.getPanel("FirebugUJS").printLine('jQuery = ' + jQuery);
 	},   
 	supportsObject: function(object) {    
 		FirebugContext.getPanel("FirebugUJS").printLine('called supportsObject');
 		return object instanceof Element ? 1 : 0; 
 	},   
 	updateSelection: function(element) {
-		FirebugContext.getPanel("FirebugUJS").printLine('called updateSelection' + element);
+		FirebugContext.getPanel("FirebugUJS").printLine('called updateSelection' + element + ' ... innerHTML => ' + element.innerHTML + ' ... before');
+		// FirebugContext.getPanel("FirebugUJS").printLine( jQuery(element).value() ); // <--- is jQuery available in this context?
+		// ^ blows up
+		FirebugContext.getPanel("FirebugUJS").printLine('after);
 	},
 
 	  searchable: false, 
