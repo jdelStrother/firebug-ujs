@@ -1,0 +1,3 @@
+content firebugujs chrome/firebugUJS/
+
+overlay chrome://firebug/content/firebugOverlay.xul	chrome://firebugujs/content/FirebugUJS.xul
