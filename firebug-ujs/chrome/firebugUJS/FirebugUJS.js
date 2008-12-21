@@ -31,8 +31,20 @@ FBL.ns( function() { with (FBL) {
 
 	FirebugUJSPanel.prototype = extend(Firebug.Panel, { 
 	  name: "FirebugUJS", 
-	  title: "Hello From Test Panel", 
+	  title: "UJS", 
 	  parentPanel: "html",
+
+	show: function(state) {
+		FirebugContext.getPanel("FirebugUJS").printLine('called show');
+	},   
+	supportsObject: function(object) {    
+		FirebugContext.getPanel("FirebugUJS").printLine('called supportsObject');
+		return object instanceof Element ? 1 : 0; 
+	},   
+	updateSelection: function(element) {
+		FirebugContext.getPanel("FirebugUJS").printLine('called updateSelection' + element);
+	},
+
 	  searchable: false, 
 	  editable: false,
 	  printLine: function(message) {
