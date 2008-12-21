@@ -1,5 +1,5 @@
 task :default do
-  puts "Rebuilding firebug_ujs.xpi"
-  puts `rm firebug_ujs.xpi; cd unzipped_firebug_ujs; zip -r ../firebug_ujs.xpi *; cd ..;`
+  puts "Rebuilding firebug-ujs.xpi"
+  puts `rm firebug-ujs.xpi; cd firebug-ujs; zip -r ../firebug-ujs.xpi *; cd ..;`
   puts "Rebuilt!"
 end
