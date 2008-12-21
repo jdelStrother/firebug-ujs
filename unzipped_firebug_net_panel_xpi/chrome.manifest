@@ -1,3 +1,3 @@
-content firebugnethistory chrome/firebugNetHistory/
+content firebugujs chrome/firebugUJS/
 
-overlay chrome://firebug/content/firebugOverlay.xul	chrome://firebugnethistory/content/NetPanelHistoryOverlay.xul
+overlay chrome://firebug/content/firebugOverlay.xul	chrome://firebugujs/content/FirebugUJS.xul

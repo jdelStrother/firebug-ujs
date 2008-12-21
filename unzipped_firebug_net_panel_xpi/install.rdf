@@ -6,11 +6,11 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>{8E812B7E-0FF3-11DD-9194-8F9555D89593}</em:id>
 
-    <em:version>0.3.0</em:version>
-    <em:name>Firebug Net Panel History Overlay</em:name>
-    <em:description>Adds history functionality to firebug net panel.</em:description>
-    <em:creator>Mihailo Lalevic</em:creator>
-    <em:homepageURL>http://digitalmihailo.blogspot.com/</em:homepageURL>
+    <em:version>0.1.0</em:version>
+    <em:name>Firebug UJS Explorer</em:name>
+    <em:description>Adds unobtrusive javascript event/behavior explorer to Firebug.</em:description>
+    <em:creator>remi Taylor</em:creator>
+    <em:homepageURL>http://remi.org/</em:homepageURL>
     <!--em:iconURL>chrome://netHistory/content/logo_32x32.png</em:iconURL-->
     <!-- Firefox -->
     <em:targetApplication>
