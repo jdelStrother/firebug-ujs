@@ -10,3 +10,11 @@ those events are triggered.  Ideally, you'll even have the ability to trigger th
 ... anywho ... gots to learn a good bit of FF/Firebug extension development to get this working first ...
 
 Once it does work, I'll put it up on the official Mozilla FF extension site.
+
+
+some notes
+----------
+
+    var events = $.data( $('a.tweet')[0], 'events' ); for (var key in events){ console.log(key); }
+
+    var events = $.data( $('a.tweet')[0], 'events' ); for (var key in events){ console.log(key); for (subkey in events[key]){ console.log(events[key][subkey].toString()); } }
