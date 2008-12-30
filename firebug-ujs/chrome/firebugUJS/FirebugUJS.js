@@ -110,8 +110,14 @@ FBL.ns( function() { with (FBL) {
 	},   
 
 	updateSelection: function(element) {
+		 clearNode(this.panelNode);
 
 		var ujs = element.getAttribute('ujs');
+
+		// include jquery.js here and use its string & array helpers to make this cleaner
+		// and better looking, etc
+		//
+		// it's just HTML, so add some purty styles, etc (like the CSS style window)
                 
 		if (ujs == null) {
 		  FirebugContext.getPanel("FirebugUJS").printLine('No UJS Events');
@@ -123,48 +129,6 @@ FBL.ns( function() { with (FBL) {
 		    FirebugContext.getPanel("FirebugUJS").printLine( type + ': ' + proc );
 		  }
 		}
-
-		/*
-		FirebugContext.getPanel("FirebugUJS").printLine('called updateSelection, element: ' + element);
-
-		var tBrowser = top.document.getElementById("content");
-		FirebugContext.getPanel("FirebugUJS").printLine('tBrowser: ' + tBrowser);
-
-		var tab = tBrowser.selectedTab;
-		FirebugContext.getPanel("FirebugUJS").printLine('tab: ' + tab);
-
-		var browser = tBrowser.getBrowserForTab(tab);
-		FirebugContext.getPanel("FirebugUJS").printLine('browser: ' + browser);
-
-		var doc = browser.contentDocument;
-		FirebugContext.getPanel("FirebugUJS").printLine('document: ' + doc);
-
-		var win = browser.contentWindow;
-		FirebugContext.getPanel("FirebugUJS").printLine('window: ' + win);
-
-	        with( gBrowser.selectedBrowser.contentWindow ){ alert('trying to get a_global_variable'); }
-	        with( gBrowser.selectedBrowser.contentWindow ){ alert('a_global_variable: ' + a_global_variable); }
-
-		var a_global_var = win['a_global_variable'];
-		FirebugContext.getPanel("FirebugUJS").printLine('a_global_variable: ' + a_global_var);
-		*/
-		
-	//with( gBrowser.selectedBrowser.contentWindow ){ alert('selected element: ' + element); }
-		// with( gBrowser.selectedBrowser.contentWindow ){ alert( typeof($) ); }
-	//with( gBrowser.selectedBrowser.contentWindow ){ alert( typeof(test) ); }
-		// with( gBrowser.selectedBrowser.contentWindow ){ alert( typeof($['cache']) ); }
-		//with( gBrowser.selectedBrowser.contentWindow ){ alert( jQuery.data( element ) ); }
-		//with( gBrowser.selectedBrowser.contentWindow ){ test('foo'); }
-		//with( gBrowser.selectedBrowser.contentWindow ){ alert( jQuery.cache ); }
-		//with( gBrowser.selectedBrowser.contentWindow ){ alert( jQuery.cache[2] ); }
-		//with( gBrowser.selectedBrowser.contentWindow ){ alert( jQuery.cache[2]['events'] ); }
-		//with( gBrowser.selectedBrowser.contentWindow ){ alert( jQuery.cache[ jQuery.data(element) ]['events'] ); }
-
-		// FirebugContext.getPanel("FirebugUJS").printLine( 'jquery: ' + $(element).text() );
-		//FirebugContext.getPanel("FirebugUJS").printLine('called updateSelection' + element + ' ... innerHTML => ' + element.innerHTML + ' ... before');
-		// FirebugContext.getPanel("FirebugUJS").printLine( jQuery(element).value() ); // <--- is jQuery available in this context?
-		// ^ blows up
-		//FirebugContext.getPanel("FirebugUJS").printLine('after);
 	},
 
 	  searchable: false, 
