@@ -1,51 +1,68 @@
 /*
- * Hook into the UJS event binding methods for different javascript libraries.
+ * FirebugUJS Client-side Library
  *
- * I'll start with jQuery.
  *
- * ( No, there isn't any way to enumerate over the native browser events )
+ * Overview:
+ *
+ *   To keep track of DOM elements that have events bound to them, 
+ *   we override the event binding method(s) used by different 
+ *   javascript libraries and keep track of the DOM elements and 
+ *   the events that get bound to them.
+ *
+ *   To do this (and to make this information safely accessible to 
+ *   the firefox extension), we add a custom attribute to all DOM 
+ *   elements with events, which holds the event information.
+ *
+ *
+ * To Do:
+ *
+ *   Instead of overriding the event binding methods of different 
+ *   javascript libraries, we should try to override the native 
+ *   javascript functions, if possible, so this is more library agnostic.
  *
  */
 
 // global
 
-var a_global_variable = 5;
+var FirebugUJS = {
+
+  event_bound_to_element: function( element, event_type, event_function ) {
+    if ( element.getAttribute('ujs') == null )
+         element.setAttribute('ujs', '');
+    element.setAttribute('ujs', element.getAttribute('ujs') + event_type + ':' + event_function + '|' );
+  }
+
+};
+
+// native
+
+/*
+FirebugUJS.native = {
+  window_addEventListener_original: window.addEventListener,
+  document_addEventListener_original: document.addEventListener,
+
+  window_EventListener: function( type, proc, bool ) {
+    FirebugUJS.event_bound_to_element( this, type, proc );
+    FirebugUJS.native.window_addEventListener_original( type, proc, bool );
+  },
+  document_addEventListener: function( type, proc, bool ) {
+    FirebugUJS.event_bound_to_element( this, type, proc );
+    FirebugUJS.native.document_addEventListener_original( type, proc, bool );
+  }
+};
+window.addEventListener = FirebugUJS.native.window_addEventListener;
+document.addEventListener = FirebugUJS.native.document_addEventListener;
+*/
 
 // jQuery
 
-FirebugUJS = { };
-
 if ( window.jQuery ) {
-  FirebugUJS.jQuery = {
+  jQuery.fn.original_bind = jQuery.fn.bind;
 
-    bindings_element: document.createElement("FirebugUJS_jQuery_Bindings"),
-
-    bind_original: jQuery.fn.bind,
-
-    bindings: { },
-
-    bind: function ( type, data ) {
-      var the_element = this[0];
-      console.log('binding [' + the_element + '].' + type + ': ' + data);
-
-      //element.setAttribute("attribute1", "first attr");
-      //element.setAttribute("attribute2", "the second");
-      //document.documentElement.appendChild(element);
-
-      if ( FirebugUJS.jQuery.bindings[ the_element ] == null ) 
-        FirebugUJS.jQuery.bindings[ the_element ] = {};
-
-      if ( FirebugUJS.jQuery.bindings[ the_element ][ type ] == null ) 
-        FirebugUJS.jQuery.bindings[ the_element ][ type ] = [];
-
-      // this uses the actual function object, which is great, but doesn't toJSON very well  :/
-      // FirebugUJS.jQuery.bindings[ the_element ][ type ][ FirebugUJS.jQuery.bindings[ the_element ][ type ].length ] = data;
-
-      FirebugUJS.jQuery.bindings[ the_element ][ type ][ FirebugUJS.jQuery.bindings[ the_element ][ type ].length ] = data.toString();
+  jQuery.fn.extend({
+    bind: function( type, data, fn ) {
+      FirebugUJS.event_bound_to_element( this[0], type, data );
+      this.original_bind( type, data, fn );
     }
-  };
-
-  jQuery.fn.bind = FirebugUJS.jQuery.bind;
+  });
 }
-
-// Prototype
