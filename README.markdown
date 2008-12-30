@@ -41,6 +41,11 @@ try to find a way of hashing elements that results in the same *unique* ID for b
 ... for now, i'm going to try using JSON and seeing if there's a SAFE way to eval it.  when i'm not on an airplane, 
 i can hopefully see if there's a library for safely eval'ing json to js objects (sans any code execution)
 
+AH HA.
+
+let's add an attribute to each of the elements that has events, adding our *OWN* unique identifier.  we can 
+use that as a pointer to the events!  not perfect ... i hate custom HTML attributes ... but it'll work!
+
 
 release notes
 -------------
