@@ -38,6 +38,9 @@ right element with the data that we want?
 
 try to find a way of hashing elements that results in the same *unique* ID for both the element and the page?
 
+... for now, i'm going to try using JSON and seeing if there's a SAFE way to eval it.  when i'm not on an airplane, 
+i can hopefully see if there's a library for safely eval'ing json to js objects (sans any code execution)
+
 
 release notes
 -------------
