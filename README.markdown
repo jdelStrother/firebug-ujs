@@ -57,3 +57,23 @@ mention the great IRC people, by name - awesome folks in the #extdev channel!
 also all of the url references ... projects' source that was helpful to look at, etc.
 
 small project, but this stuff might help someone else!
+
+
+i need to include a javascript file on the client side ...
+----------------------------------------------------------
+
+for this, try something like ... (try this with an html page & an image first) ...
+
+    (10:49:17 AM) remitaylor: is there a way to get the filesystem path to your firefox extension?  (from the extension .js)
+    (10:49:41 AM) [DA]Xel|AWAY: well using chrome manifest
+    (10:49:48 AM) [DA]Xel|AWAY: you can set your content path
+    (10:49:53 AM) [DA]Xel|AWAY: and use chrome uri's 
+    (10:50:07 AM) [DA]Xel|AWAY: chrome://WHATEVERYOUCALLEDYOURCONTENT/content/
+    (10:50:11 AM) [DA]Xel|AWAY: and you are there :)
+    (10:51:19 AM) remitaylor: so, for example, if i embedded a html page in my xpi and i wanted to be able to direct the user to it on some event (to file:///...foo.html) ... is there a way i could get the extension path to do something like that?
+    (10:52:44 AM) [DA]Xel|AWAY: window.open("chrome://foo/content/bar.html", "My HTML Page", "chrome");
+    (10:52:56 AM) [DA]Xel|AWAY: or...
+    (10:53:01 AM) Ratty left the room (quit: Quit: ChatZilla 0.9.83 [SeaMonkey 1.5a/2007052909]).
+    (10:53:23 AM) [DA]Xel|AWAY: var tBrowser = top.document.getElementById('content');
+    (10:53:43 AM) [DA]Xel|AWAY: tBrowser.addTab("chrome://foo/content/bar.html");
+    (10:54:19 AM) remitaylor: sweetness, thanks - imma try that!
