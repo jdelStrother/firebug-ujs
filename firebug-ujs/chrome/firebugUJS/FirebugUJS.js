@@ -110,7 +110,23 @@ FBL.ns( function() { with (FBL) {
 	},   
 
 	updateSelection: function(element) {
-		 clearNode(this.panelNode);
+	    //var elt = this.document.createElement("p");
+	    //elt.innerHTML = message;
+	    //this.panelNode.appendChild(elt);
+
+		clearNode(this.panelNode);
+
+		var tBrowser = top.document.getElementById("content");
+		var tab = tBrowser.selectedTab;
+		var browser = tBrowser.getBrowserForTab(tab);
+		var doc = browser.contentDocument;
+		var head = doc.getElementsByTagName('head')[0];
+		var body = doc.getElementsByTagName('body')[0];
+
+		//FirebugContext.getPanel("FirebugUJS").printLine( 'head: ' );
+		//FirebugContext.getPanel("FirebugUJS").printLine( head );
+		// FirebugContext.getPanel("FirebugUJS").printLine( head.innerHTML );
+		//FirebugContext.getPanel("FirebugUJS").printLine( doc.getElementById('section_10').innerHTML );
 
 		var ujs = element.getAttribute('ujs');
 
@@ -150,7 +166,66 @@ FBL.ns( function() { with (FBL) {
 		var file = em.getInstallLocation(MY_ID).getItemFile(MY_ID, "install.rdf");
 		var dir = file.path;
 
-		FirebugContext.getPanel("FirebugUJS").printLine( dir );
+		// FirebugContext.getPanel("FirebugUJS").printLine( dir );
+
+		var src = dir; // => /home/remi/.mozilla/firefox/efs72yik.default/extensions/{8E812B7E-0FF3-11DD-9194-8F9555D89593}/install.rdf
+		src = 'file://' + src;
+		src = src.replace('install.rdf', 'chrome/firebugUJS/FirebugUJS.client-side.js');
+
+/*
+		var file = Components.classes["@mozilla.org/file/local;1"].
+			                     createInstance(Components.interfaces.nsILocalFile);
+		file.initWithPath( src );
+
+   		var file = URL.QueryInterface(Components.interfaces.nsIFileURL).file;
+
+		// |file| is nsIFile
+		var data = "";
+		var fstream = Components.classes["@mozilla.org/network/file-input-stream;1"].
+					createInstance(Components.interfaces.nsIFileInputStream);
+		var sstream = Components.classes["@mozilla.org/scriptableinputstream;1"].
+					createInstance(Components.interfaces.nsIScriptableInputStream);
+		fstream.init(file, -1, 0, 0);
+		sstream.init(fstream); 
+
+		var str = sstream.read(4096);
+		while (str.length > 0) {
+		  data += str;
+		  str = sstream.read(4096);
+		}
+
+		sstream.close();
+		fstream.close();
+		// alert(data);
+		FirebugContext.getPanel("FirebugUJS").printLine( data );
+*/
+		FirebugContext.getPanel("FirebugUJS").printLine( 'get contents ... of: ' + src );
+		// FirebugContext.getPanel("FirebugUJS").printLine( getContents(src) );
+		FirebugContext.getPanel("FirebugUJS").printLine( this.getContents('chrome://firebugujs/content/hello.txt') );
+		FirebugContext.getPanel("FirebugUJS").printLine( this.getContents('chrome://firebugujs/content/FirebugUJS.client-side.js') );
+
+		// won't work!  can't loca JS off local filesystem.  sheesh.  gotta read the file into a <script> tag!
+		test_script = doc.createElement('script');
+		test_script.setAttribute('type', 'text/javascript');
+		test_script.innerHTML =  'alert("requiring ...");';
+		//test_script.innerHTML +=  'alert("<script type=\'text/javascript\' src=\'' + src + '\'></script>");';
+		//test_script.innerHTML +=  'document.write("<script type=\'text/javascript\' src=\'' + src + '\'></script>");';
+		test_script.innerHTML += this.getContents('chrome://firebugujs/content/FirebugUJS.client-side.js');
+		test_script.innerHTML += 'alert("required!");';
+		body.appendChild(test_script);
+
+		var my_script = doc.getElementById('firebug-js-include');
+		if (my_script == null) {
+			my_script = doc.createElement('script');
+			my_script.setAttribute('id', 'firebug-js-include');
+			my_script.setAttribute('type', 'text/javascript');
+			my_script.setAttribute('src', src);
+			// body.appendChild(my_script);
+
+			// head.appendChild(my_script);
+			    // this.panelNode.appendChild(my_script);
+		}
+
 
 	},
 
@@ -160,7 +235,38 @@ FBL.ns( function() { with (FBL) {
 	    var elt = this.document.createElement("p");
 	    elt.innerHTML = message;
 	    this.panelNode.appendChild(elt);
-	  }
+	  },
+
+    getContents: function(aURL) {
+FirebugContext.getPanel("FirebugUJS").printLine('1');
+      var ioService=Components.classes["@mozilla.org/network/io-service;1"]
+        .getService(Components.interfaces.nsIIOService);
+FirebugContext.getPanel("FirebugUJS").printLine('2');
+      var scriptableStream=Components
+        .classes["@mozilla.org/scriptableinputstream;1"]
+        .getService(Components.interfaces.nsIScriptableInputStream);
+FirebugContext.getPanel("FirebugUJS").printLine('3');
+
+      var channel=ioService.newChannel(aURL,null,null);
+FirebugContext.getPanel("FirebugUJS").printLine('4');
+      var input=channel.open();
+FirebugContext.getPanel("FirebugUJS").printLine('5');
+      scriptableStream.init(input);
+FirebugContext.getPanel("FirebugUJS").printLine('6');
+      var str=scriptableStream.read(input.available());
+FirebugContext.getPanel("FirebugUJS").printLine('7');
+      scriptableStream.close();
+FirebugContext.getPanel("FirebugUJS").printLine('8');
+      input.close();
+FirebugContext.getPanel("FirebugUJS").printLine('9');
+      return str;
+    }
+
+    //try{
+    //  alert(getContents("chrome://browser/content/browser.css"));
+    //  alert(getContents("http://www.mozillazine.org/"));
+    //}catch(e){alert(e)}
+
 	}); 
 
 	Firebug.registerModule(Firebug.FirebugUJS); 
