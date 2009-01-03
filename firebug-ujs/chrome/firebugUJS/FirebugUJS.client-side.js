@@ -21,55 +21,59 @@
  *   javascript functions, if possible, so this is more library agnostic.
  *
  */
-alert('loading firebug-ujs client-side library ...');
+if ( FirebugUJS == null ) {
 
-// global
+	console.log('loading firebug-ujs client-side library ...');
 
-var FirebugUJS = {
+	// global
 
-  event_bound_to_element: function( element, event_type, event_function ) {
-    alert('event_bound_to_element: ' + element + ', ' + event_type);
-    if ( element.getAttribute('ujs') == null )
-         element.setAttribute('ujs', '');
-    element.setAttribute('ujs', element.getAttribute('ujs') + event_type + ':' + event_function + '|' );
-  }
+	var FirebugUJS = {
 
-};
+	  event_bound_to_element: function( element, event_type, event_function ) {
+	    console.log('event_bound_to_element: ' + element + ', ' + event_type);
+	    if ( element.getAttribute('ujs') == null )
+		 element.setAttribute('ujs', '');
+	    element.setAttribute('ujs', element.getAttribute('ujs') + event_type + ':' + event_function + '|' );
+	  }
 
-// native
+	};
 
-// GET THIS WORKING!
-FirebugUJS.native = {
-  window_addEventListener_original: window.addEventListener,
-  document_addEventListener_original: document.addEventListener,
+	// native
 
-  window_EventListener: function( type, proc, bool ) {
-    FirebugUJS.event_bound_to_element( this, type, proc );
-    FirebugUJS.native.window_addEventListener_original( type, proc, bool );
-  },
-  document_addEventListener: function( type, proc, bool ) {
-    FirebugUJS.event_bound_to_element( this, type, proc );
-    FirebugUJS.native.document_addEventListener_original( type, proc, bool );
-  }
-};
-window.addEventListener = FirebugUJS.native.window_addEventListener;
-document.addEventListener = FirebugUJS.native.document_addEventListener;
+	// GET THIS WORKING!
+	FirebugUJS.native = {
+	  window_addEventListener_original: window.addEventListener,
+	  document_addEventListener_original: document.addEventListener,
 
-// jQuery
+	  window_EventListener: function( type, proc, bool ) {
+	    FirebugUJS.event_bound_to_element( this, type, proc );
+	    FirebugUJS.native.window_addEventListener_original( type, proc, bool );
+	  },
+	  document_addEventListener: function( type, proc, bool ) {
+	    FirebugUJS.event_bound_to_element( this, type, proc );
+	    FirebugUJS.native.document_addEventListener_original( type, proc, bool );
+	  }
+	};
+	window.addEventListener = FirebugUJS.native.window_addEventListener;
+	document.addEventListener = FirebugUJS.native.document_addEventListener;
 
-if ( window.jQuery ) {
-  alert('loading FirebugUJS jQuery module');
-  jQuery.fn.original_bind = jQuery.fn.bind;
+	// jQuery
 
-  jQuery.fn.extend({
-    bind: function( type, data, fn ) {
-      FirebugUJS.event_bound_to_element( this[0], type, data );
-      this.original_bind( type, data, fn );
-    }
-  });
+	if ( window.jQuery ) {
+	  console.log('loading FirebugUJS jQuery module');
+	  jQuery.fn.original_bind = jQuery.fn.bind;
+
+	  jQuery.fn.extend({
+	    bind: function( type, data, fn ) {
+	      FirebugUJS.event_bound_to_element( this[0], type, data );
+	      this.original_bind( type, data, fn );
+	    }
+	  });
+	}
+
+	// Prototype
+
+	// hook into Event.observe but also see if this can be done via overriding the native events ... !
+	console.log('done!  loaded firebug-ujs client-side library.');
+
 }
-
-// Prototype
-
-// hook into Event.observe but also see if this can be done via overriding the native events ... !
-alert('done!  loaded firebug-ujs client-side library.');
