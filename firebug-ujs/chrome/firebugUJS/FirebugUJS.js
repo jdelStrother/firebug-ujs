@@ -129,6 +129,29 @@ FBL.ns( function() { with (FBL) {
 		    FirebugContext.getPanel("FirebugUJS").printLine( type + ': ' + proc );
 		  }
 		}
+
+		FirebugContext.getPanel("FirebugUJS").printLine('dir: ');
+		// testing to try to get extension dir ...
+		//var componentFile = __LOCATION__;
+		//var componentsDir = componentFile.parent;
+		//var extensionDir = componentsDir.parent;
+		
+		//var dir = Components.classes["@mozilla.org/file/directory_service;1"].
+		//	getService(Components.interfaces.nsIProperties).
+		//	get("resource:app", Components.interfaces.nsIFile);
+
+		// the extension's id from install.rdf
+		//var MY_ID = "myextension@my.name";
+		var MY_ID = "{8E812B7E-0FF3-11DD-9194-8F9555D89593}";
+		var em = Components.classes["@mozilla.org/extensions/manager;1"].
+			getService(Components.interfaces.nsIExtensionManager);
+		// the path may use forward slash ("/") as the delimiter
+		// returns nsIFile for the extension's install.rdf
+		var file = em.getInstallLocation(MY_ID).getItemFile(MY_ID, "install.rdf");
+		var dir = file.path;
+
+		FirebugContext.getPanel("FirebugUJS").printLine( dir );
+
 	},
 
 	  searchable: false, 
