@@ -1,64 +1,75 @@
+// TODO add css styles (try using firebug built-ins)
+//
+// var elt = this.document.createElement("div");
+// elt.className = rowName + (className ? " " + rowName + "-" + className : "");
+
 FBL.ns( function() { with (FBL) { 
 
-	// MODULE
 	Firebug.FirebugUJS = extend(Firebug.Module, { 
 		shutdown: function() {
-				  if(Firebug.getPref('defaultPanelName')=='FirebugUJS') {
-					  /* Optional */
-					  Firebug.setPref('defaultPanelName','console');
-				  }
-			  },
+			  if(Firebug.getPref('defaultPanelName')=='FirebugUJS')
+				  Firebug.setPref('defaultPanelName','console');
+		},
 		showPanel: function(browser, panel) { 
-				   var isFirebugUJS = panel && panel.name == "FirebugUJS"; 
-				   var FirebugUJSButtons = browser.chrome.$("fbFirebugUJSButtons"); 
-				   collapse(FirebugUJSButtons, !isFirebugUJS); 
-			   }, 
-		button1: function() { }, 
-		button2: function() { } 
+			   var isFirebugUJS = panel && panel.name == "FirebugUJS"; 
+			   var FirebugUJSButtons = browser.chrome.$("fbFirebugUJSButtons");
+			   collapse(FirebugUJSButtons, !isFirebugUJS);
+		}, 
 	}); 
 
-	// PANEL
 	function FirebugUJSPanel() {} 
 
 	FirebugUJSPanel.prototype = extend(Firebug.Panel, { 
 
 		name: "FirebugUJS", 
-		title: "UJS", 
+		title: "Events", 
 		parentPanel: "html",
 
 		show: function(state) { },   
 
-		supportsObject: function(object) {    
-			FirebugContext.getPanel("FirebugUJS").printLine('called supportsObject');
-			return object instanceof Element ? 1 : 0; 
-		},   
-
 		updateSelection: function(element) {
 			 clearNode(this.panelNode);
-			 // this is too late!  window.onload is already run by now ... meaning we can't override things  :(
-			 //
-			 // need to add this javascript before the page gets loaded!  when the plugin is initialized?
+
 			 this.load_client_side_javascript();
 
 			 var ujs = element.getAttribute('ujs');
-			 // include jquery.js here and use its string & array helpers to make this cleaner
-			 // and better looking, etc
+
+			 // include jquery.js here and use its helpers to make this cleaner
 			 //
-			 // it's just HTML, so add some purty styles, etc (like the CSS style window)
+			 // TODO *need* to get jquery working in this scope for creating / modifying elements
+			 //
 			 if (ujs == null) {
-				 FirebugContext.getPanel("FirebugUJS").printLine('No UJS Events');
+				 this.printLine('No UJS Events');
 			 } else {
 				 var ujs_events = ujs.split('|');
 				 for each (var ujs_event in ujs_events) {
-					 var type = ujs_event.split(':')[0];
-					 var proc = ujs_event.split(':')[1];
-					 FirebugContext.getPanel("FirebugUJS").printLine( type + ': ' + proc );
+				   var type = ujs_event.split(':')[0];
+				   var proc = ujs_event.split(':')[1];
+				   if (type != '') {
+					   var event_div = this.document.createElement('div');
+
+					   var event_name_element = this.document.createElement("span");
+					   event_name_element.innerHTML = type + ': ';
+					   event_name_element.className = 'firebugUJS-eventName'; // ?
+					   event_name_element.style.color = 'blue';
+					   event_name_element.style.fontWeight = 'bold';
+					   event_div.appendChild( event_name_element );
+
+					   var event_value_element = this.document.createElement("span");
+					   event_value_element.innerHTML = proc;
+					   event_value_element.className = 'firebugUJS-eventValue'; // ?
+					   event_div.appendChild( event_value_element );
+
+					   this.append( event_div );
+				   }
 				 }
 			 }
 		 },
 
 		searchable: false, 
 	    	editable: false,
+
+		// clean up!
 		load_client_side_javascript: function() {
 			 var tBrowser = top.document.getElementById("content");
 			 var tab = tBrowser.selectedTab;
@@ -82,11 +93,27 @@ FBL.ns( function() { with (FBL) {
 			 //test_script.innerHTML += 'alert("required!");';
 			 body.appendChild(test_script);
 		},
+
 	    	printLine: function(message) {
 		    var elt = this.document.createElement("p");
 		    elt.innerHTML = message;
 		    this.panelNode.appendChild(elt);
 	    	},
+
+		// append DOM element to panel
+		// 
+		// element: the actual DOM element or the tag name of an element
+		// options: options to be set on the DOM element before appending
+		//
+		// this.append( some_dom_element );
+		// this.append( 'p', { 'class': 'foo', innerHTML: 'bar' });
+		//
+		append: function( element, options ) {
+		    // console.log( 'append(' + element + ', ' + options + ');' ); // d'oh ... forgot i can't do this?
+		    //with( gBrowser.selectedBrowser.contentWindow ){ alert('hi'); }
+		    //with( gBrowser.selectedBrowser.contentWindow ){ console.log('hi'); }
+		    this.panelNode.appendChild( element );
+		},
 
 		getContents: function(aURL) {
 		     var ioService=Components.classes["@mozilla.org/network/io-service;1"]
@@ -135,7 +162,7 @@ var myExtension = {
 
     //alert( doc );
     //alert( doc.getElementsByTagName('head') );
-    alert( doc.getElementsByTagName('title')[0].innerHTML );
+    //alert( doc.getElementsByTagName('title')[0].innerHTML );
     //doc.getElementsByTagName('title')[0].innerHTML = 'changed!';
     //alert( doc.getElementsByTagName('title')[0].innerHTML );
 
@@ -149,7 +176,7 @@ var myExtension = {
 			 //alert( doc2.getElementsByTagName('title')[0].innerHTML );
 
 			 //alert( doc2.getElementsByTagName('h1')[0].innerHTML );
-			 doc2.getElementsByTagName('h1')[0].innerHTML = 'changed!';
+			 //doc2.getElementsByTagName('h1')[0].innerHTML = 'changed!';
 			 //alert( doc2.getElementsByTagName('h1')[0].innerHTML );
 
 			 var head = doc2.getElementsByTagName('head')[0];
@@ -169,7 +196,7 @@ var myExtension = {
 			 src = src.replace('install.rdf', 'chrome/firebugUJS/FirebugUJS.client-side.js');
 			 test_script = doc.createElement('script');
 			 test_script.setAttribute('type', 'text/javascript');
-			 test_script.innerHTML =  'alert("requiring ...");';
+			 //test_script.innerHTML =  'alert("requiring ...");';
 
 			// taken from getContents ... will re-extract to method during refactoring phase ...
 			// just wanna get this working!
@@ -188,7 +215,7 @@ var myExtension = {
 
 		     ///
 			 test_script.innerHTML += str;
-			 test_script.innerHTML += 'alert("required!");';
+			 //test_script.innerHTML += 'alert("required!");';
 			 head.appendChild(test_script);
   },
 

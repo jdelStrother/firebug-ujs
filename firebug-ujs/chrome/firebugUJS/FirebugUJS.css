@@ -1,0 +1,6 @@
+/* Stylesheet for FirebugUJS */
+
+p.firebugUJS-eventName {
+  color: blue;
+  font-weight: bold;
+}

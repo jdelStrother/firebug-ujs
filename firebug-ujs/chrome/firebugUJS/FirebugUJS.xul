@@ -1,17 +1,6 @@
 <?xml version="1.0"?> 
+<?xml-stylesheet href="chrome://FirebugUJS/content/FirebugUJS.css"?>
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"> 
-  <script type="application/x-javascript"
-          src="chrome://FirebugUJS/content/FirebugUJS.js"/> 
-  <commandset id="mainCommandSet"> 
-    <command id="cmd_button1FirebugUJS" oncommand="Firebug.FirebugUJS.button1()"/> 
-    <command id="cmd_button2FirebugUJS" oncommand="Firebug.FirebugUJS.button2()"/> 
-  </commandset> 
-  <toolbar id="fbToolbar" align="center"> 
-    <hbox id="fbToolbarInner" insertbefore="fbDetachButton" flex="1" align="center"> 
-      <hbox id="fbFirebugUJSButtons" insertafter="fbNetButtons"> 
-        <toolbarbutton label="Button 1" class="toolbar-text-button" tooltiptext="Button 1" command="cmd_button1FirebugUJS"/> 
-        <toolbarbutton label="Button 2" class="toolbar-text-button" tooltiptext="Button 2" command="cmd_button2FirebugUJS"/> 
-      </hbox> 
-    </hbox> 
-  </toolbar> 
+  <script type="application/x-javascript" src="chrome://FirebugUJS/content/jquery.js"/> 
+  <script type="application/x-javascript" src="chrome://FirebugUJS/content/FirebugUJS.js"/> 
 </overlay> 
