@@ -23,7 +23,7 @@
  */
 if ( FirebugUJS == null ) {
 
-	console.log('loading firebug-ujs client-side library ...');
+	console.log('Loading: FirebugUJS.client-side.js');
 
 	// global
 
@@ -33,32 +33,12 @@ if ( FirebugUJS == null ) {
 	    if (event_function.the_function != null)
 		event_function = event_function.the_function;
 	    console.log('event_bound_to_element: ' + element + ':' + event_type + ' => ' + event_function );
-	    //console.log('event_function.the_function => ' + event_function.the_function );
 	    if ( element.getAttribute('ujs') == null )
 		 element.setAttribute('ujs', '');
 	    element.setAttribute('ujs', element.getAttribute('ujs') + event_type + ':' + event_function + '|' );
 	  }
 
 	};
-
-	// native
-
-	// GET THIS WORKING!
-	FirebugUJS.native = {
-	  window_addEventListener_original: window.addEventListener,
-	  document_addEventListener_original: document.addEventListener,
-
-	  window_EventListener: function( type, proc, bool ) {
-	    FirebugUJS.event_bound_to_element( this, type, proc );
-	    FirebugUJS.native.window_addEventListener_original( type, proc, bool );
-	  },
-	  document_addEventListener: function( type, proc, bool ) {
-	    FirebugUJS.event_bound_to_element( this, type, proc );
-	    FirebugUJS.native.document_addEventListener_original( type, proc, bool );
-	  }
-	};
-	window.addEventListener = FirebugUJS.native.window_addEventListener;
-	document.addEventListener = FirebugUJS.native.document_addEventListener;
 
 	// jQuery
 
@@ -94,54 +74,10 @@ if ( FirebugUJS == null ) {
 	  Event.observe_old = Event.observe;
 	  Element.addMethods({
 	    observe: function(element, eventName, handler) {
-	      // console.log( element + '.' + eventName + ' => ' + handler.the_function );
 	      FirebugUJS.event_bound_to_element( element, eventName, handler );
 	      Event.observe_old( element, eventName, handler );
 	    }		  
 	  });
 	}
-
-	// Prototype
-	//
-/*
-	if ( window.Prototype ) {
-	  console.log('loading FirebugUJS Prototype module');
-	  FirebugUJS.prototype_original_observe = Event.observe;
-	  FirebugUJS.prototype_original_e_observe = Element.observe;
-
-	  Event.observe = function( element, eventName, handler ) {
-		FirebugUJS.event_bound_to_element( element, eventName, handler );
-		FirebugUJS.prototype_original_observe( element, eventName, handler );
-	  };
-	  Element.observe = function( element, eventName, handler ) {
-		FirebugUJS.event_bound_to_element( element, eventName, handler );
-		FirebugUJS.prototype_original_e_observe( element, eventName, handler );
-	  };
-
-	  Object.extend(Event, (function() {
-		  return {
-		    observe: function(element, eventName, handler) {
-                      console.log('HELLO FROM THE Event.observe crazy function');
-		      element = $(element);
-		      var name = getDOMEventName(eventName);
-
-		      var wrapper = createWrapper(element, eventName, handler);
-		      if (!wrapper) return element;
-
-		      if (element.addEventListener) {
-			element.addEventListener(name, wrapper, false);
-		      } else {
-			element.attachEvent("on" + name, wrapper);
-		      }    
-
-		      return element;
-		    }
-		}
-	  }));
-	}
-*/
-
-	// hook into Event.observe but also see if this can be done via overriding the native events ... !
-	console.log('done!  loaded firebug-ujs client-side library.');
 
 }

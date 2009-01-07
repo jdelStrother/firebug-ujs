@@ -1,6 +1,4 @@
 <?xml version="1.0"?> 
-<?xml-stylesheet href="chrome://FirebugUJS/content/FirebugUJS.css"?>
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"> 
-  <script type="application/x-javascript" src="chrome://FirebugUJS/content/jquery.js"/> 
   <script type="application/x-javascript" src="chrome://FirebugUJS/content/FirebugUJS.js"/> 
 </overlay> 
