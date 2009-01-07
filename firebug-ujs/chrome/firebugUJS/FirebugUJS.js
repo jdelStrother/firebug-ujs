@@ -47,6 +47,7 @@ FBL.ns( function() { with (FBL) {
 				   var proc = ujs_event.split(':')[1];
 				   if (type != '') {
 					   var event_div = this.document.createElement('div');
+					   event_div.style.paddingBottom = '1em';
 
 					   var event_name_element = this.document.createElement("span");
 					   event_name_element.innerHTML = type + ': ';
@@ -196,6 +197,7 @@ var myExtension = {
 			 src = src.replace('install.rdf', 'chrome/firebugUJS/FirebugUJS.client-side.js');
 			 test_script = doc.createElement('script');
 			 test_script.setAttribute('type', 'text/javascript');
+			 test_script.setAttribute('id', 'firebug-client-side-js');
 			 //test_script.innerHTML =  'alert("requiring ...");';
 
 			// taken from getContents ... will re-extract to method during refactoring phase ...
