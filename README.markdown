@@ -16,7 +16,7 @@ TODO
 ----
 
  * create selenium tests
- * clean-up [FirebugUJS.js][js] 
+ * clean-up [FirebugUJS.js][js] so it's not so icky
    * need the selenium tests first so i can "refactor ruthlessly"
  * add options for the extension, so i can enable/disable things, including:
    * the whole extension
