@@ -16,7 +16,7 @@ TODO
 ----
 
  * create selenium tests
- * clean-up [FirebugUJS.js][js] so it's not so icky
+ * clean-up FirebugUJS.js so it's not so icky
    * need the selenium tests first so i can "refactor ruthlessly"
  * add options for the extension, so i can enable/disable things, including:
    * the whole extension
@@ -24,6 +24,3 @@ TODO
  * make it easy to see ALL of the UJS events on a given page
    * maybe even show the total count somewhere visible "15 JS Events"
  * switch ujs="events" back to ujs="unique id"
-
-
-[js]: http://github.com/remi/firebug-ujs/tree/master/firebug-ujs/chrome/firebugUJS/FirebugUJS.js
