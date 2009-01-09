@@ -20,6 +20,8 @@ __NOTE:__ github's markdown engine sucks ass.  my TODO list is right.  github is
  * create selenium tests
  * clean-up [FirebugUJS.js][js] so it's not so icky
    * need the selenium tests first so i can "refactor ruthlessly"
+ * if you use the Firebug console to add events to a DOM element, they DO get added 
+   to the UJS element, but they don't show up in the Events tab!
  * add options for the extension, so i can enable/disable things, including:
    * the whole extension
    * console logging / debugging for the extension
