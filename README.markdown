@@ -10,24 +10,3 @@ Firebug extension for displaying Unobtrusive Javascript bound to DOM elements.
     more documentation coming soon
 
 [Download FirebugUJS](http://github.com/remi/firebug-ujs/raw/master/firebug-ujs.xpi)
-
-
-TODO
-----
-
-__NOTE:__ github's markdown engine sucks ass.  my TODO list is right.  github is wrong.  stupid thing ...
-
- * create selenium tests
- * clean-up [FirebugUJS.js][js] so it's not so icky
-   * need the selenium tests first so i can "refactor ruthlessly"
- * if you use the Firebug console to add events to a DOM element, they DO get added 
-   to the UJS element, but they don't show up in the Events tab!
- * add options for the extension, so i can enable/disable things, including:
-   * the whole extension
-   * console logging / debugging for the extension
- * make it easy to see ALL of the UJS events on a given page
-   * maybe even show the total count somewhere visible "15 JS Events"
- * switch ujs="events" back to ujs="unique id"
-
-
-[js]: http://github.com/remi/firebug-ujs/tree/master/firebug-ujs/chrome/firebugUJS/FirebugUJS.js
