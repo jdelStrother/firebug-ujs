@@ -24,19 +24,21 @@
 if ( FirebugUJS == null ) {
 
 	console.log('Loading: FirebugUJS.client-side.js');
-	console.log('hi!');
 
 	// global
 
 	var FirebugUJS = {
 
 	  event_bound_to_element: function( element, event_type, event_function ) {
-	    if (event_function.the_function != null)
-		event_function = event_function.the_function;
-	    console.log('event_bound_to_element: ' + element + ':' + event_type + ' => ' + event_function );
-	    if ( element.getAttribute('ujs') == null )
-		 element.setAttribute('ujs', '');
-	    element.setAttribute('ujs', element.getAttribute('ujs') + event_type + ':' + event_function + '|' );
+	    if ( element && event_type && event_function ) {
+		    if (event_function.the_function != null)
+			event_function = event_function.the_function;
+		    //console.log('event_bound_to_element: ' + element + ':' + event_type + ' => ' + event_function );
+		    console.log('FirebugUJS: event_bound_to_element: ' + element + ':' + event_type );
+		    if ( element.getAttribute('ujs') == null )
+			 element.setAttribute('ujs', '');
+		    element.setAttribute('ujs', element.getAttribute('ujs') + event_type + ':' + event_function + '|' );
+	    }
 	  }
 
 	};
