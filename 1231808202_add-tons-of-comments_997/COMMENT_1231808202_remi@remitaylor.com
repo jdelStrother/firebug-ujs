@@ -1,0 +1,1 @@
+most people haven't worked with firefox extensions before and even those who have likely haven't worked with *firebug* extensions before ... document what in the world is going on!  (after cleaning it up)
