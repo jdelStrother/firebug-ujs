@@ -23,7 +23,7 @@
  */
 if ( FirebugUJS == null ) {
 
-  console.log('Loading: FirebugUJS.client-side.js');
+  console.log('FirebugUJS: loading client-side javascript');
 
   // global
 
@@ -46,7 +46,7 @@ if ( FirebugUJS == null ) {
   // jQuery
 
   if ( window.jQuery ) {
-    console.log('Loading: FirebugUJS jQuery module');
+    console.log('FirebugUJS: loading jQuery module');
     jQuery.fn.original_bind = jQuery.fn.bind;
 
     jQuery.fn.extend({
@@ -60,7 +60,7 @@ if ( FirebugUJS == null ) {
   // LowPro
 
   if ( window.Event && window.Event.addBehavior ) {
-    console.log('Loading: FirebugUJS LowPro module');
+    console.log('FirebugUJS: loading LowPro module');
 
     FirebugUJS.LowPro = {
       original: {
@@ -86,7 +86,7 @@ if ( FirebugUJS == null ) {
   // Prototype
 
   if ( window.Prototype ) {
-    console.log('Loading: Prototype module');
+    console.log('FiregubUJS: loading Prototype module');
 
     Event.observe_old = Event.observe;
     Element.addMethods({
