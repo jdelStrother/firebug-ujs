@@ -52,7 +52,7 @@ if ( FirebugUJS == null ) {
     jQuery.fn.extend({
         bind: function( type, data, fn ) {
           FirebugUJS.event_bound_to_element( this[0], type, data );
-          this.original_bind( type, data, fn );
+          return this.original_bind( type, data, fn );
         }
       });
   }
